@@ -1,5 +1,8 @@
+"""Funciones calculadora"""
 def sumar(a, b):
- return a + b
+    """Funcion sumar""" 
+    return a + b
 
 def restar(a, b):
- return a + b
+    """Funcion restar""" 
+    return a + b
