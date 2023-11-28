@@ -1,7 +1,7 @@
 """
 Creacion de Pedidos
 """
-from flask import Flask, request, redirect, render_template, url_for
+from flask import Flask, request, redirect, render_template, url_for, Response
 
 app = Flask(__name__)
 
@@ -25,6 +25,14 @@ def guardar_pedido(nombre_cliente, apellido_cliente):
     with open("pedidosPizza.txt", "a", encoding="utf-8") as file:
         file.write(nombre_cliente + " " + apellido_cliente + "\n")
         file.close()
+
+@app.route("/checksize", methods=['POST'])
+def checksize(pizza_size):
+    """Obtiene el tamaño de la pizza y devuelve su disponibilidad en Pantalla"""
+    pizza_size = request.form.get("p6")
+    print(pizza_size)
+    mensaje = 'No Disponible' if pizza_size == 'S' else 'Disponible'
+    return Response(mensaje, 200, {'Access-Control-Allow-Origin': '*'})
 
 @app.route('/solicita_pedido')
 def solicita_pedido():
