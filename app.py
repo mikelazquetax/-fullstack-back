@@ -27,11 +27,14 @@ def guardar_pedido(nombre_cliente, apellido_cliente):
         file.close()
 
 @app.route("/checksize", methods=['POST'])
-def checksize(pizza_size):
+def checksize():
     """Obtiene el tamaño de la pizza y devuelve su disponibilidad en Pantalla"""
-    pizza_size = request.form.get("p6")
+    pizza_size = request.args.get('p6')
     print(pizza_size)
-    mensaje = 'No Disponible' if pizza_size == 'S' else 'Disponible'
+    if pizza_size == 'S':
+        mensaje = 'No Disponible'
+    else:
+        mensaje = 'Disponible'
     return Response(mensaje, 200, {'Access-Control-Allow-Origin': '*'})
 
 @app.route('/solicita_pedido')
