@@ -1,9 +1,9 @@
 name: Pipeline Backend
 on:
  push:
- branches: [ main ]
+ branches: [ master ]
  pull_request:
- branches: [ main ]
+ branches: [ master ]
  workflow_dispatch:
 jobs:
  build:
@@ -17,4 +17,4 @@ pip install pylint pytest flask
 - name: Pylint
 run: pylint `ls -R|grep .py$|xargs`
 - name: Pytest
-run: pytest `ls -R|grep test_*.py$|xargs`
+run: pytest `ls -R|grep test_*.py$|xargs` 
