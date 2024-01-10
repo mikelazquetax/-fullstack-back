@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carta xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="carta.xsd">
+    <remitente>
+        <nombre>Veronica</nombre>
+        <apellidos>Antoranz Onrubia</apellidos>
+    </remitente>
+    <destinatario direccion="C/LIBERTAD 3º 7-1" provincia="Madrid" localidad="Madrid" codigo_postal="12345">
+        <nombre>Mikel</nombre>
+        <apellidos>Azqueta Alzuaz</apellidos>
+    </destinatario>
+    <cuerpo>
+        <saludo>Buenos días</saludo>
+        <parrafo>Esto es el parrafo 1</parrafo>
+        <parrafo>Esto es el parrafo 2</parrafo>
+        <parrafo>Esto es el parrafo 3</parrafo>
+        <firma>Firma del Remitente</firma>
+    </cuerpo>
+</carta>
