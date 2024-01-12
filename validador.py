@@ -6,11 +6,13 @@ import sys
 from xmlschema import XMLSchema
 from flask import Flask
 import xml.etree.ElementTree as ET
+import xmltodict
+import json
 
 
 app = Flask(__name__)
 
-def validador(xml_file, xsd_file, xpath):
+def validador(xml_file, xsd_file, xpath, json_var):
     """Recogemos XML y lo validamos"""
     """En la parte dos, tenemos que pasarle un elemento del xml y ser capaces de leer el valor de dicho elemento, el parámetro IMPORT es XPATH"""
 
@@ -28,16 +30,39 @@ def validador(xml_file, xsd_file, xpath):
 
     if xpath:
         print(f"ok, es el {xpath}")
-        for elem in root.iter(xpath):
+
+        elementos = xpath.split("/")
+
+        elementos = [elemento for elemento in elementos if elemento]
+
+        elemento_principal = elementos[0] if len(elementos) > 0 else None
+        atributo = elementos[-1] if len(elementos) > 1 else None
+
+
+        for elem in root.iter(elemento_principal):
             print(elem.tag)
             for child in elem:
-                print(child.tag)
-                if (child.text and child.tag == "nombre"):
+                if(child.tag == atributo):
+                    print(child.tag)
                     """Devuelve Veronica"""
-                    return child.text
+                    print(child.text)
+                    
     else:
         print('not ok')
 
+    if json_var == True:
+        with open('carta.xml', 'r') as xml_file:
+            xml_content = xml_file.read()
+            print(xml_content)
+        xml_python = xmltodict.parse(xml_content)
+        json_data = json.dumps(xml_python, indent=4)
+
+        with open('carta.json', 'w') as json_file:
+            json_file.write(json_data)
+        print("JSON Generado")
+    else:
+        print("no se genera fichero")
+    
 if __name__ == "__main__":
     if len(sys.argv) != 3:
         print("Uso: python validador.py carta.xml carta.xsd")
@@ -49,7 +74,8 @@ if __name__ == "__main__":
     archivo_xsd = sys.argv[2]
     """valor que le pasamos a la función como p2, lo sacamos de ejecuta desde la consola el comando: python validador.py carta.xml carta.xsd"""
     print(archivo_xsd) 
-    xpath = "remitente"
+    xpath = "/remitente//nombre"
+    json_var = True
 
-valor = validador(archivo_xml, archivo_xsd, xpath)
-print(valor)
+validador(archivo_xml, archivo_xsd, xpath, json_var)
+

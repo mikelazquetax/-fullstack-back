@@ -1,0 +1,27 @@
+{
+    "carta": {
+        "@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+        "@xsi:noNamespaceSchemaLocation": "carta.xsd",
+        "remitente": {
+            "nombre": "Veronica",
+            "apellidos": "Antoranz Onrubia"
+        },
+        "destinatario": {
+            "@direccion": "C/LIBERTAD 3\u00c2\u00ba 7-1",
+            "@provincia": "Madrid",
+            "@localidad": "Madrid",
+            "@codigo_postal": "12345",
+            "nombre": "Mikel",
+            "apellidos": "Azqueta Alzuaz"
+        },
+        "cuerpo": {
+            "saludo": "Buenos d\u00c3\u00adas",
+            "parrafo": [
+                "Esto es el parrafo 1",
+                "Esto es el parrafo 2",
+                "Esto es el parrafo 3"
+            ],
+            "firma": "Firma del Remitente"
+        }
+    }
+}
