@@ -26,18 +26,21 @@ def validador(xml_file, xsd_file, xpath):
         sys.exit(1)
 
 
-    if xpath == 'remitente':
-        print('ok')
+    if xpath:
+        print(f"ok, es el {xpath}")
         for elem in root.iter(xpath):
-            print(elem)
-            atributoNombreRemitente = elem.get('nombre')
-            print(atributoNombreRemitente)
+            print(elem.tag)
+            for child in elem:
+                print(child.tag)
+                if (child.text and child.tag == "nombre"):
+                    """Devuelve Veronica"""
+                    return child.text
     else:
         print('not ok')
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        print("Uso: python validador_xml.py carta.xml carta.xsd")
+        print("Uso: python validador.py carta.xml carta.xsd")
         sys.exit(1)
 
     archivo_xml = sys.argv[1]
@@ -46,5 +49,7 @@ if __name__ == "__main__":
     archivo_xsd = sys.argv[2]
     """valor que le pasamos a la función como p2, lo sacamos de ejecuta desde la consola el comando: python validador.py carta.xml carta.xsd"""
     print(archivo_xsd) 
-    xpath = 'remitente'
-validador(archivo_xml, archivo_xsd, xpath)
+    xpath = "remitente"
+
+valor = validador(archivo_xml, archivo_xsd, xpath)
+print(valor)
