@@ -1,0 +1,189 @@
+openapi: 3.0.2
+info:
+  version: "1.0.0"
+  title: "API de Pruebas - jsonplaceholder.typicode.com"
+  description: "Actividad de documentación de APIs"
+
+tags:
+  - name: posts
+    description: "Información sobre posts"
+
+paths:
+  /posts/{id}:
+    parameters:
+      - name: "id"
+        in: "path"
+        description: "ID del post"
+        required: true
+        schema:
+          type: "integer"
+    put:
+      summary: "Actualizar un post por ID"
+      description: "Actualiza la información de un post específico."
+      tags:
+        - posts
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID del post a actualizar"
+          required: true
+          schema:
+            type: "integer"
+        - name: "body"
+          in: "query"
+          description: "Nuevos datos del post"
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PostInput"
+      responses:
+        '200':
+          description: "Operación exitosa"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Post"
+
+    post:
+      summary: "Crea una entrada con un ID"
+      description: "Crea una nueva entrada de post con el ID proporcionado."
+      tags:
+        - posts
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "string"
+                example: "Nombre del recurso creado"
+        '400':
+          description: "Error"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostInput"
+              
+    get:
+      summary: "Obtiene las entradas de bbdd"
+      tags:
+        - posts
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID del post a obtener (opcional)"
+          required: true
+          schema:
+            type: "integer"
+      responses:
+        '200':
+          description: "Operación exitosa"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Post"
+  /comments/{id}:
+    parameters:
+      - name: "id"
+        in: "path"
+        description: "ID del post"
+        required: true
+        schema:
+          type: "integer"
+    put:
+      summary: "Actualizar un post por ID"
+      description: "Actualiza la información de un post específico."
+      tags:
+        - comments
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID del post a actualizar"
+          required: true
+          schema:
+            type: "integer"
+        - name: "body"
+          in: "query"
+          description: "Nuevos datos del post"
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PostInput"
+      responses:
+        '200':
+          description: "Operación exitosa"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Post"
+
+    post:
+      summary: "Crea una entrada con un ID"
+      description: "Crea una nueva entrada de post con el ID proporcionado."
+      tags:
+        - comments
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "string"
+                example: "Nombre del recurso creado"
+        '400':
+          description: "Error"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostInput"
+              
+    get:
+      summary: "Obtiene las entradas de bbdd"
+      tags:
+        - comments
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "ID del post a obtener (opcional)"
+          required: true
+          schema:
+            type: "integer"
+      responses:
+        '200':
+          description: "Operación exitosa"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Post"
+components:
+  schemas:
+    Post:
+      type: "object"
+      properties:
+        userId:
+          type: "integer"
+        id:
+          type: "integer"
+        title:
+          type: "string"
+        body:
+          type: "string"
+
+    PostInput:
+      type: "object"
+      properties:
+        userId:
+          type: "integer"
+        title:
+          type: "string"
+        body:
+          type: "string"
+
+
+    
