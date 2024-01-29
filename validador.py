@@ -74,7 +74,7 @@ if __name__ == "__main__":
     archivo_xsd = sys.argv[2]
     """valor que le pasamos a la función como p2, lo sacamos de ejecuta desde la consola el comando: python validador.py carta.xml carta.xsd"""
     print(archivo_xsd) 
-    xpath = "/remitente//nombre"
+    xpath = "/remitente//apellidos"
     json_var = True
 
 validador(archivo_xml, archivo_xsd, xpath, json_var)
