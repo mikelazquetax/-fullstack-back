@@ -21,6 +21,8 @@ with open(args.config, 'r') as config_file:
 conn = sql.connect(config['basedatos']['path'])
 c = conn.cursor()
 
+api_key = config['basedatos']['consumidor_almacen_key']
+
 # Crear tabla si no existe
 c.execute('''CREATE TABLE IF NOT EXISTS productos (
             idProduct integer PRIMARY KEY AUTOINCREMENT,
@@ -29,7 +31,6 @@ c.execute('''CREATE TABLE IF NOT EXISTS productos (
             productAvailable BOOLEAN
              )''')
 conn.commit()
-
 
 #Insertamos un unico producto para tener datos
 def insertProduct(idProduct, productName, productCount, productAvailable):
@@ -116,6 +117,31 @@ def delete_producto(idProduct):
     conn.commit()
     return jsonify({'mensaje': 'Product Deleted Successfully'})   
 
+# Ruta para actualizar datos de Producto  python almacen.py --config config.yaml
+@app.route('/warehouse/productQuantity/<int:idProduct>', methods=['PUT'])
+def actualizar_producto_quantity(idProduct):
+    data = request.json
+    operation = data.get('operation')
+    print(operation)
+    conn = sql.connect(config['basedatos']['path'])
+    c = conn.cursor()
+   
+    c.execute("SELECT * FROM productos WHERE idProduct = ?", (idProduct,))
+    producto = c.fetchone()
+    print(producto)
+    quantity = producto[2]
+
+    if operation == 'decrease':
+        quantity = quantity - 1
+    elif operation == 'increase':
+        quantity = quantity + 1
+    else:
+        return
+
+    c.execute('UPDATE productos SET productCount = ? WHERE idProduct = ?', (quantity, idProduct))
+  
+    conn.commit()
+    return jsonify({'mensaje': 'Product updated successfully'})
 
 if __name__ == '__main__':
     app.run(host=args.servidor, port=args.puerto)
