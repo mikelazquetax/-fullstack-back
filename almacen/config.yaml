@@ -1,0 +1,7 @@
+basedatos:
+  path: warehouse.db
+  consumidor_almacen: consumidor_almacen
+  consumidor_almacen_key: 12345
+
+servicios:
+  path: /warehouse/
