@@ -27,7 +27,7 @@ api_key = config['basedatos']['consumidor_almacen_key']
 c.execute('''CREATE TABLE IF NOT EXISTS productos (
             idProduct integer PRIMARY KEY AUTOINCREMENT,
             productName text,
-            productCount integer,
+            productCount integer, 
             productAvailable BOOLEAN
              )''')
 conn.commit()
