@@ -41,10 +41,19 @@ def insertProduct(idProduct, productName, productCount, productAvailable):
     conn.commit()
     conn.close()
 
+# Función para verificar la validez del API KEY en cada solicitud
+def verificar_api_key(api_key):
+    if 'API-Key' not in request.headers:
+        return False
+    else:
+        return request.headers['API-Key'] == api_key
 
 # Ruta para obtener la lista de productos
 @app.route('/warehouse/productos', methods=['GET'])
 def obtener_productos():
+    if not verificar_api_key(api_key):
+        return jsonify({'mensaje': 'API KEY inválido'}), 401
+
     try:
         conn = sql.connect(config['basedatos']['path'])
         c = conn.cursor()
@@ -60,6 +69,9 @@ def obtener_productos():
 # Ruta para obtener detalles de un producto específico
 @app.route('/warehouse/productos/<int:idProduct>', methods=['GET'])
 def obtener_detalle_producto(idProduct):
+    if not verificar_api_key(api_key):
+        return jsonify({'mensaje': 'API KEY inválido'}), 401
+    
     print(idProduct)
     conn = sql.connect(config['basedatos']['path'])
     c = conn.cursor()
@@ -75,6 +87,9 @@ def obtener_detalle_producto(idProduct):
 # Ruta para actualizar datos de Producto
 @app.route('/warehouse/productos/<int:idProduct>', methods=['PUT'])
 def actualizar_producto(idProduct):
+    if not verificar_api_key(api_key):
+        return jsonify({'mensaje': 'API KEY inválido'}), 401
+
     data = request.json
     productAvailable = data.get('productAvailable')
     productCount = data.get('productCount')
@@ -93,6 +108,9 @@ def actualizar_producto(idProduct):
 # Ruta para crear datos de Producto
 @app.route('/warehouse/productos/<int:idProduct>', methods=['POST'])
 def crear_producto_nuevo(idProduct):
+    if not verificar_api_key(api_key):
+        return jsonify({'mensaje': 'API KEY inválido'}), 401
+
     data = request.json
     print(idProduct)
     print(data)
@@ -111,6 +129,9 @@ def crear_producto_nuevo(idProduct):
 
 @app.route('/warehouse/productos/<int:idProduct>', methods=['DELETE'])
 def delete_producto(idProduct):
+    if not verificar_api_key(api_key):
+        return jsonify({'mensaje': 'API KEY inválido'}), 401
+
     conn = sql.connect(config['basedatos']['path'])
     c = conn.cursor()
     c.execute('DELETE FROM productos WHERE idProduct = ?', (idProduct,))
@@ -120,6 +141,9 @@ def delete_producto(idProduct):
 # Ruta para actualizar datos de Producto  python almacen.py --config config.yaml
 @app.route('/warehouse/productQuantity/<int:idProduct>', methods=['PUT'])
 def actualizar_producto_quantity(idProduct):
+    if not verificar_api_key(api_key):
+        return jsonify({'mensaje': 'API KEY inválido'}), 401
+
     data = request.json
     operation = data.get('operation')
     print(operation)
